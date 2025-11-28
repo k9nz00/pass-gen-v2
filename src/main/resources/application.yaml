@@ -1,3 +1,15 @@
 spring:
   application:
     name: pass-gen-v2
+
+  main:
+    banner-mode: off
+    show-banner: false
+
+  shell:
+    interactive:
+      enabled: true
+
+logging:
+  level:
+    root: WARN
