@@ -1,6 +1,7 @@
 package com.semka.pets.pass_gen_v2.commands;
 
 import com.semka.pets.pass_gen_v2.rulesprovider.RulesProvider;
+import com.semka.pets.pass_gen_v2.util.PathUtil;
 import lombok.RequiredArgsConstructor;
 import org.passay.CharacterRule;
 import org.passay.PasswordGenerator;
@@ -9,8 +10,6 @@ import org.springframework.shell.command.annotation.Option;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 @Command(group = "Main", description = "Главная группа команд")
@@ -58,11 +57,12 @@ public class CreatePassword {
         }
 
         String passwordsString = passwords.toString();
-        if (needSaveInFile){
-            try (FileWriter writer = new FileWriter("passwords.txt")) {
+        if (needSaveInFile) {
+            String pathExecuted = PathUtil.getPathExecuted(CreatePassword.class);
+            try (FileWriter writer = new FileWriter(pathExecuted + "/passwords.txt")) {
                 writer.write(passwordsString);
-                System.out.println("Text saved to output.txt");
             } catch (IOException e) {
+                //корректный обработчик ошибок https://habr.com/ru/companies/spring_aio/articles/903864/
                 System.err.println("Error writing to file: " + e.getMessage());
             }
         }
